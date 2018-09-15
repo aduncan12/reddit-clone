@@ -1,0 +1,15 @@
+{% extends "tidder/base.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1>Welcome to tiddeR !</h1>
+        <h2>The backpage of the internet</h2>
+    {% if user.is_authenticated %}
+        <h3>Hello {{ user.username }}</h3>
+    {% else %}
+        <h3>Register or Login if you'd like to</h3>
+    {% endif %}
+    </div>
+    <p>post</p>
+</div>
+{% endblock %}
