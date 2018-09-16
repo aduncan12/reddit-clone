@@ -5,11 +5,13 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import User, Post
+import datetime
 
 # Create your views here.
 
 def index(request):
-    return render(request,'tidder/index.html')
+    allposts = Post.objects.all()
+    return render(request, 'tidder/index.html', {'allposts': allposts})
 
 @login_required
 def special(request):
@@ -71,13 +73,10 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data.get('title')
-            content = form.cleaned_data.get('content')
-            site_url = form.cleaned_data.get('site_url')
-            post = Post(title=title, content=content, site_url=site_url, user=request.user)
-            print(post)
+            post = form.save(commit=False)
+            post.user = request.user
             post.save()
-            return redirect('index', pk=post.pk)
+            return redirect('index')
         else:
             print('\nform is invalid\n')
     else:
