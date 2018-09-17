@@ -69,6 +69,7 @@ def user_login(request):
     else:
         return render(request, 'tidder/login.html', {})
 
+@login_required
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -82,3 +83,7 @@ def create_post(request):
     else:
         form = PostForm()
     return render(request, 'tidder/post_form.html', {'form': form})
+
+def post_view(request, pk):
+    post = Post.objects.get(id=pk)
+    return render(request, 'tidder/post_view.html', {'post': post})

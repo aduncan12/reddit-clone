@@ -10,7 +10,7 @@ app_name = 'tidder'
 urlpatterns=[
     path('register', views.register, name='register'),
     path('user_login', views.user_login, name='user_login'),
-    path('post', views.create_post, name='create_post'),
-    path('', views.index, name='post_view'),
+    path('newpost', views.create_post, name='create_post'),
+    path('post/<int:pk>', views.post_view, name='post_view'),
     # path('/api/users', views.sendJson, name='sendJson')
 ]

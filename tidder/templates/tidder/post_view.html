@@ -1,14 +1,7 @@
 {% extends "tidder/base.html" %}
 
 {% block content %}
-    <section class="posts">
-        {%for post in posts%}
-            <div class="contain">
-                <!-- <div>{{post.picture}}</div> -->
-                <!-- <div><a href="{% url 'post_view' pk=post.pk %}">{{post.title}}</a></div> -->
-                <!-- <div>{{post.user}} {{post.vote_total}}</div>
-                <div>{{post.content}}</div> -->
-            </div>
-        {%endfor%}
-    </section>
+    <h3><a href="{{ post.site_url }}">{{ post.site_url }}</a></h3>
+    <h3>Title: {{ post.title }}</h3>
+    <h3>Content: {{ post.content }}</h3>
 {% endblock %}

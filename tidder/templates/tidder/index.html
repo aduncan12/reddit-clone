@@ -14,8 +14,10 @@
 
     <div class="posts">
     {% for post in allposts %}
-    <p>{{ post.post_vote }} {{ post.picture }}<h4>{{post.title}}</h4> {{ post.site_url }} {{ post.post_time }}</p>
+    <p>{{ post.post_vote }} {{ post.picture }}<h4><a href="{{post.title}}">{{ post.title }}</a></h4> <a href="{{ post.site_url }}">{{ post.site_url }}</a> {{ post.post_time }}</p>
+    <p>{{ post.user }}</p>
     <p>{{ post.content }}</p>
+
     <hr>
     {% endfor %}
     </div>
