@@ -1,0 +1,12 @@
+{% extends "tidder/post_view.html" %}
+{% load staticfiles %}
+{% block content %}
+<div>
+    <h4>Add a Comment</h4>
+        <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="" value="Comment">
+        </form>
+</div>
+{% endblock %}

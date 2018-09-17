@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, UserProfile, Post
+from .models import User, UserProfile, Post, CommentPost
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -19,3 +19,9 @@ class PostForm(forms.ModelForm):
     class Meta():
         model = Post
         fields = ('title', 'site_url', 'content', 'picture')
+
+class CommentForm(forms.ModelForm):
+
+    class Meta():
+        model = CommentPost
+        fields = ('content', 'user')

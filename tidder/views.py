@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserForm, UserProfileForm, PostForm
+from .forms import UserForm, UserProfileForm, PostForm, CommentForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
@@ -87,3 +87,18 @@ def create_post(request):
 def post_view(request, pk):
     post = Post.objects.get(id=pk)
     return render(request, 'tidder/post_view.html', {'post': post})
+
+@login_required
+def create_comment(request):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            return redirect('index')
+        else:
+            print('\nform is invalid\n')
+    else:
+        form = CommentForm()
+    return render(request, 'tidder/comment_form.html', {'form': form})
