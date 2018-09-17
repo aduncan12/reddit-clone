@@ -36,7 +36,10 @@ class CommentPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment_time = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
-    comment_vote = models.IntegerField()
+    comment_vote = models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.content
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

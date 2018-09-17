@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User, Post
+from .models import User, Post, CommentPost
 import datetime
 
 # Create your views here.
@@ -41,7 +41,7 @@ def register(request):
                 profile.profile_pic = request.FILES['profile_pic']
             profile.save()
             registered = True
-            return redirect('index')
+            return redirect('tidder/login.html')
 
         else:
             print(user_form.errors,profile_form.errors)
@@ -91,14 +91,18 @@ def post_view(request, pk):
 @login_required
 def create_comment(request):
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
+        cform = CommentForm(request.POST)
+        if cform.is_valid():
+            comment = cform.save(commit=False)
             comment.user = request.user
             comment.save()
             return redirect('index')
         else:
             print('\nform is invalid\n')
     else:
-        form = CommentForm()
-    return render(request, 'tidder/comment_form.html', {'form': form})
+        cform = CommentForm()
+    return render(request, 'tidder/comment_form.html', {'cform': cform})
+
+def comment_view(request, pk):
+    comment = CommentPost.objects.get(id=pk)
+    return render(request, 'tidder/post_view.html', {'comment': comment})
